@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const SendInvite = () => {
+() => {
   const [inviteType, setInviteType] = useState("email"); // Default is invite by email
   const [emails, setEmails] = useState("");
   const [orgId, setOrgId] = useState("");
@@ -24,9 +24,10 @@ const SendInvite = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${userToken}` // Include user authentication token
             },
             body: JSON.stringify({
-              orgId,
+              orgId: validateOrgId(orgId), // Validate and sanitize orgId
               emails: emails.split(","), // Assuming emails are comma-separated
               isEmailRestricted: true,
             }),
@@ -51,9 +52,10 @@ const SendInvite = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${userToken}` // Include user authentication token
             },
             body: JSON.stringify({
-              orgId,
+              orgId: validateOrgId(orgId), // Validate and sanitize orgId
               emails: [], // Empty for link invites
               isEmailRestricted: false,
             }),
@@ -146,7 +148,7 @@ const SendInvite = () => {
       </div>
     </div>
   );
-};
+}
 
 const styles = {
   container: {
